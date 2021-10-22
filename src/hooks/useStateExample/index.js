@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -16,6 +16,19 @@ export default function UseStateExample() {
     {id: 4, title: 'Dixon'},
   ]);
   const [artistName, setArtistName] = useState();
+
+  //useEffect function runs everytime the component renders or re-renders.
+  //If I want to run useEffect when only the artists state changes, I need to add it in the array
+  //Otherwise useEffect runs when any data changes in the component.
+  //We can use useEffect as many time as we want.
+
+  useEffect(() => {
+    console.log('useEffect hook ran : ' + JSON.stringify(artists));
+  }, [artists]);
+
+  useEffect(() => {
+    console.log('useEffect hook ran : ' + count);
+  }, [count]);
 
   const wholeArtists = () => {
     return artists.map(function (artist, i) {
