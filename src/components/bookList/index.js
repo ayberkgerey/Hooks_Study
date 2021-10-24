@@ -1,15 +1,20 @@
 import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {BookContext} from '../../contexts/bookContext';
-import BookList from '../../components/bookList';
+import BookDetails from '../bookDetails';
 
-export default function UseContextExample() {
+export default function BookList() {
   const {books} = useContext(BookContext);
 
-  return (
+  return books.length ? (
     <View style={styles.container}>
-      <Text>You currently have {books.length} books.</Text>
-      <BookList />
+      {books.map(book => {
+        return <BookDetails book={book} />;
+      })}
+    </View>
+  ) : (
+    <View>
+      <Text>There are no books.</Text>
     </View>
   );
 }
@@ -17,9 +22,7 @@ export default function UseContextExample() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 100,
-    paddingRight: 100,
+    alignItems: 'center',
   },
 });

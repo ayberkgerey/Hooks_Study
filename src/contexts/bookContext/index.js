@@ -9,8 +9,17 @@ const BookContextProvider = ({children}) => {
     {id: 3, title: 'Lord Of the Rings 3'},
     {id: 4, title: 'Hobbit'},
   ]);
+
+  const addBook = title => {
+    setBooks([...books, {id: books.length + 1, title: title}]);
+  };
+
+  const removeBook = id => {
+    setBooks(books.filter(book => book.id !== id));
+  };
+
   return (
-    <BookContext.Provider value={{books, setBooks}}>
+    <BookContext.Provider value={{books, addBook, removeBook}}>
       {children}
     </BookContext.Provider>
   );
