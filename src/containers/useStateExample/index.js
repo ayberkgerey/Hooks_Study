@@ -27,6 +27,10 @@ export default function UseStateExample() {
   }, [artists]);
 
   useEffect(() => {
+    console.log('First ran Only');
+  }, []);
+
+  useEffect(() => {
     console.log('useEffect hook ran : ' + count);
   }, [count]);
 
