@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {BookContext} from '../../contexts/bookContext';
 import BookList from '../../components/bookList';
+import BookForm from '../../components/bookForm';
 
 export default function UseContextExample() {
   const {books} = useContext(BookContext);
@@ -9,6 +10,7 @@ export default function UseContextExample() {
   return (
     <View style={styles.container}>
       <Text>You currently have {books.length} books.</Text>
+      <BookForm />
       <BookList />
     </View>
   );
