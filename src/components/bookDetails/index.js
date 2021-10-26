@@ -6,7 +6,7 @@ export default function BookDetails({book}) {
   const {removeBook} = useContext(BookContext);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} key={book.id}>
       <View style={styles.textContainer}>
         <Text style={styles.listText}>{book.id}) </Text>
         <Text style={styles.listText}>{book.title}</Text>
