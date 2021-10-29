@@ -8,7 +8,6 @@ export default function BookDetails({book}) {
   return (
     <View style={styles.container} key={book.id}>
       <View style={styles.textContainer}>
-        <Text style={styles.listText}>{book.id}) </Text>
         <Text style={styles.listText}>{book.title}</Text>
       </View>
       <TouchableOpacity

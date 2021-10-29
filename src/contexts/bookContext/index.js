@@ -1,4 +1,6 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
+import uuid from 'react-native-uuid';
 
 export const BookContext = createContext();
 
@@ -11,12 +13,40 @@ const BookContextProvider = ({children}) => {
   ]);
 
   const addBook = title => {
-    setBooks([...books, {id: books.length + 1, title: title}]);
+    setBooks([...books, {id: uuid.v4(), title: title}]);
   };
 
   const removeBook = id => {
     setBooks(books.filter(book => book.id !== id));
   };
+
+  const storeData = async () => {
+    try {
+      await AsyncStorage.setItem('myBooks', JSON.stringify(books));
+      console.log('Data stored');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const retrieveData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('myBooks');
+      if (value !== null) {
+        // We have data!!
+        console.log('Data has pulled');
+        console.log(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    storeData();
+    retrieveData();
+  }, [books]);
 
   return (
     <BookContext.Provider value={{books, addBook, removeBook}}>
