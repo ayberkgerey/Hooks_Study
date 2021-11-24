@@ -5,12 +5,7 @@ import uuid from 'react-native-uuid';
 export const BookContext = createContext();
 
 const BookContextProvider = ({children}) => {
-  const [books, setBooks] = useState([
-    {id: 1, title: 'Lord Of the Rings 1'},
-    {id: 2, title: 'Lord Of the Rings 2'},
-    {id: 3, title: 'Lord Of the Rings 3'},
-    {id: 4, title: 'Hobbit'},
-  ]);
+  const [books, setBooks] = useState([]);
 
   const addBook = title => {
     setBooks([...books, {id: uuid.v4(), title: title}]);
@@ -31,11 +26,13 @@ const BookContextProvider = ({children}) => {
 
   const retrieveData = async () => {
     try {
-      const value = await AsyncStorage.getItem('myBooks');
+      const valueString = await AsyncStorage.getItem('myBooks');
+      const value = JSON.parse(valueString);
       if (value !== null) {
         // We have data!!
         console.log('Data has pulled');
         console.log(value);
+        setBooks(value);
       }
     } catch (error) {
       // Error retrieving data
@@ -44,8 +41,11 @@ const BookContextProvider = ({children}) => {
   };
 
   useEffect(() => {
-    storeData();
     retrieveData();
+  }, []);
+
+  useEffect(() => {
+    storeData();
   }, [books]);
 
   return (
